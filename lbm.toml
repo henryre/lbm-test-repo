@@ -1,0 +1,49 @@
+[lbm]
+version = 1
+ready_label = "ready-for-dev"
+guidance_file = "AGENTS.md"
+
+[build]
+runtime = "node"
+install = "npm install"
+lint = "npm run lint"
+typecheck = "npx tsc --noEmit"
+build = "npm run build"
+
+[checks]
+required = ["ci/lint", "ci/test"]
+repair_from = ["ci/lint", "ci/test"]
+max_repair_attempts = 10
+max_ralph_loops = 1
+
+[deploy]
+platform = "vercel"
+preview_env = "preview"
+
+[llm]
+provider = "anthropic"
+summary_model = "claude-sonnet-4-6"
+
+[harnesses.claude]
+mention = "@claude"
+
+[harnesses.codex]
+mention = "@codex"
+
+[harnesses.openhands]
+mention = "@openhands-agent"
+
+[[agents]]
+harness = "claude"
+model_id = "claude-opus-4-6"
+model_label = "opus-4-6"
+
+[[agents]]
+harness = "codex"
+model_id = "gpt-5.3-codex"
+model_label = "gpt-5.3"
+
+[[agents]]
+harness = "openhands"
+model_id = "gemini/gemini-3.1-pro-preview"
+model_label = "gemini-3.1"
